@@ -55,7 +55,9 @@ async function mainEvent() { // the async keyword means we can make API requests
     console.table(currentList); 
   });
 
-  filterButton.addEventListener('click', )
+  filterButton.addEventListener('click', (event) => {
+    console.log('clicked FilterButton');
+  }) 
   /*
     Now that you HAVE a list loaded, write an event listener set to your filter button
     it should use the 'new FormData(target-form)' method to read the contents of your main form
