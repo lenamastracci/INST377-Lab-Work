@@ -1,4 +1,3 @@
-
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -17,24 +16,30 @@
           <h2>Form Inputs</h2>
           <form
             action="https://data.princegeorgescountymd.gov/resource/umjn-t2iz.json"
-            class="box main_form">
+            class="box main_form"
+          >
             <button type="button" id="data_load">Load County Data</button>
             <div>
               <label for="resto">Restaurant Name</label>
-              <input type="text" id="resto" name="resto">
+              <input type="text" id="resto" name="resto" />
             </div>
-            <div class = "buttons">
-                <button type="button" id="filter_button">Filter Data</button>
-                <button type="button" id="generate">Generate List</button>
+            <div class="buttons">
+              <button type="button" id="filter_button">Filter Data</button>
+              <button type="button" id="generate">Generate List</button>
             </div>
           </form>
         </div>
         <div class="right_section box">
-            <h2>Local Restaurants</h2>
-            <ol class="box" id="restaurant_list">
-                A List of Local Restaurants
-            </ol>
-            <div class ="lds-ellipsis" id="load_animation"><div></div><div></div><div></div><div></div></div>
+          <h2>Local Restaurants</h2>
+          <ol class="box" id="restaurant_list">
+            A List of Local Restaurants
+          </ol>
+          <div class="lds-ellipsis" id="load_animation">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
         </div>
       </div>
       <footer class="footer">
