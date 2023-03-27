@@ -9,7 +9,7 @@ function getRandomIntInclusive(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-function injectHTML() {
+function injectHTML(list) {
   console.log('fired injectHTML')
   const target = document.querySelector('#restaurant_list');
   target.innerHTML = '';
@@ -38,8 +38,9 @@ function filterList(list, query) {
 
 async function mainEvent() { // the async keyword means we can make API requests
   const mainForm = document.querySelector('.main_form'); // This class name needs to be set on your form before you can listen for an event on it
-  // Add a querySelector that targets your filter button here
-  const filterButton = document.querySelector('.filter_button');
+  const filterButton = document.querySelector('#filter_button');
+  const loadDataButton = document.querySelector('#data_load');
+  const generateListButton = document.querySelector('#generate');
   let currentList = []; // this is "scoped" to the main event function
   
   /* We need to listen to an "event" to have something happen in our page - here we're listening for a "submit" */
@@ -56,14 +57,13 @@ async function mainEvent() { // the async keyword means we can make API requests
     currentList = await results.json();
     console.table(currentList);
     injectHTML(currentList);
-
+  });
     /*
       This array initially contains all 1,000 records from your request,
       but it will only be defined _after_ the request resolves - any filtering on it before that
       simply won't work.
     */
-    console.table(currentList); 
-  });
+    
 
   filterButton.addEventListener('click', (event) => {
     console.log('clicked FilterButton');
@@ -73,6 +73,7 @@ async function mainEvent() { // the async keyword means we can make API requests
 
     console.log(formProps);
     const newList = filterList(currentList, formProps.resto);
+    injectHTML(newList);
 
     console.log(newList);
   }) 
