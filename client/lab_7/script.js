@@ -52,11 +52,10 @@ async function mainEvent() {
   const generateListButton = document.querySelector("#generate");
   const textField = document.querySelector("#resto");
 
-  const loadAnimation = document.querySelector("#load_animation");
+  const loadAnimation = document.querySelector("#data_load_animation");
   loadAnimation.style.display = "none";
   generateListButton.classList.add("hidden");
 
-  let storedList = [];
   let currentList = []; // this is "scoped" to the main event function
 
   /* We need to listen to an "event" to have something happen in our page - here we're listening for a "submit" */
@@ -71,12 +70,13 @@ async function mainEvent() {
     );
 
     // This changes the response from the GET into data we can use - an "object"
-    storedList = await results.json();
+    const storedList = await results.json();
+    localStorage.setItem('storedData', JSON.stringify(storedList));
     if (storedList.length > 0) {
       generateListButton.classList.remove("hidden");
     }
     loadAnimation.style.display = "none";
-    console.table(storedList);
+    //console.table(storedList);
   });
   /*
         This array initially contains all 1,000 records from your request,
@@ -99,7 +99,9 @@ async function mainEvent() {
 
   generateListButton.addEventListener("click", (event) => {
     console.log("generate new list");
-    currentList = cutRestaurantList(storedList);
+    const recallList = localStorage.getItem('storedData');
+    console.log(recallList);
+    currentList = cutRestaurantList(recallList);
     console.log(currentList);
     injectHTML(currentList);
   });
