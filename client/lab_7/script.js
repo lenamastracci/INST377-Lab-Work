@@ -47,14 +47,20 @@ function cutRestaurantList(list) {
 async function mainEvent() {
   // the async keyword means we can make API requests
   const mainForm = document.querySelector(".main_form"); // This class name needs to be set on your form before you can listen for an event on it
-  const filterDataButton = document.querySelector("#filter_button");
+  //const filterDataButton = document.querySelector("#filter_button");
   const loadDataButton = document.querySelector("#data_load");
   const generateListButton = document.querySelector("#generate");
   const textField = document.querySelector("#resto");
 
-  const loadAnimation = document.querySelector("#data_load_animation");
+  const loadAnimation = document.querySelector("#load_animation");
   loadAnimation.style.display = "none";
   generateListButton.classList.add("hidden");
+
+  const storedData = localStorage.getItem('storedData');
+  const parsedData = JSON.parse(storedData);
+  if (parsedData.length > 0) {
+    generateListButton.classList.remove("hidden");
+  }
 
   let currentList = []; // this is "scoped" to the main event function
 
@@ -72,9 +78,7 @@ async function mainEvent() {
     // This changes the response from the GET into data we can use - an "object"
     const storedList = await results.json();
     localStorage.setItem('storedData', JSON.stringify(storedList));
-    if (storedList.length > 0) {
-      generateListButton.classList.remove("hidden");
-    }
+    
     loadAnimation.style.display = "none";
     //console.table(storedList);
   });
@@ -84,7 +88,7 @@ async function mainEvent() {
         simply won't work.
       */
 
-  filterDataButton.addEventListener("click", (event) => {
+  //filterDataButton.addEventListener("click", (event) => {
     console.log("clicked FilterButton");
 
     const formData = new FormData(mainForm);
@@ -95,13 +99,11 @@ async function mainEvent() {
     injectHTML(newList);
 
     console.log(newList);
-  });
+  //});
 
   generateListButton.addEventListener("click", (event) => {
     console.log("generate new list");
-    const recallList = localStorage.getItem('storedData');
-    console.log(recallList);
-    currentList = cutRestaurantList(recallList);
+    currentList = cutRestaurantList(parsedData);
     console.log(currentList);
     injectHTML(currentList);
   });
