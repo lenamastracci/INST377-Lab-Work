@@ -50,6 +50,7 @@ async function mainEvent() { // the async keyword means we can make API requests
   const filterDataButton = document.querySelector('#filter_button');
   const loadDataButton = document.querySelector('#data_load');
   const generateListButton = document.querySelector('#generate');
+  const textField = document.querySelector('#resto')
 
   const loadAnimation = document.querySelector('#load_animation');
   loadAnimation.style.display = 'none';
@@ -69,11 +70,7 @@ async function mainEvent() { // the async keyword means we can make API requests
     loadAnimation.style.display = 'none';
     console.table(currentList);
   });
-    /*
-      This array initially contains all 1,000 records from your request,
-      but it will only be defined _after_ the request resolves - any filtering on it before that
-      simply won't work.
-    */
+    
     
 
   filterDataButton.addEventListener('click', (event) => {
@@ -84,9 +81,8 @@ async function mainEvent() { // the async keyword means we can make API requests
 
     console.log(formProps);
     const newList = filterList(currentList, formProps.resto);
-    injectHTML(newList);
-
     console.log(newList);
+    injectHTML(newList);
   }) 
 
 
@@ -96,7 +92,14 @@ async function mainEvent() { // the async keyword means we can make API requests
     console.log(restaurantList)
     injectHTML(restaurantList);
   })
-} 
+
+  textField.addEventListener('input', (event) => {
+    console.log('input', event.target.value);
+    const newList = filterList(currentList, event.target.value);
+    console.log(newList);
+    injectHTML(newList);
+  })
+}
   /*
     Now that you HAVE a list loaded, write an event listener set to your filter button
     it should use the 'new FormData(target-form)' method to read the contents of your main form
